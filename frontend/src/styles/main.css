@@ -1,0 +1,344 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f4f5f7;
+  color: #212121;
+  font-size: 14px;
+}
+
+.app {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 16px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  text-align: center;
+  padding: 12px 0 20px;
+}
+
+.app-header h1 {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.subtitle {
+  color: #757575;
+  margin-top: 6px;
+}
+
+main {
+  flex: 1;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  margin: 16px 0 8px;
+}
+
+/* ---- 搜索 ---- */
+.stock-search {
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.search-results {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 4px;
+  max-height: 280px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.search-results li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 14px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.search-results li:hover {
+  background: #f0f6ff;
+}
+
+.search-results .stock-code {
+  color: #757575;
+}
+
+/* ---- 周期选择 ---- */
+.period-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.period-btn {
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.period-btn.active {
+  background: #1976d2;
+  border-color: #1976d2;
+  color: #fff;
+}
+
+.analyze-btn {
+  width: 100%;
+  height: 48px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: #e53935;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.analyze-btn:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}
+
+.hint {
+  margin-top: 10px;
+  color: #fb8c00;
+}
+
+/* ---- 结果页 ---- */
+.back-btn {
+  min-height: 44px;
+  padding: 0 14px;
+  margin-bottom: 12px;
+  border: none;
+  background: none;
+  color: #1976d2;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px 0;
+  color: #757575;
+}
+
+.error-text {
+  color: #c62828;
+  padding: 8px 0;
+}
+
+.mock-banner {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  color: #8d6e00;
+}
+
+.stock-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stock-title h2 {
+  font-size: 20px;
+}
+
+.stock-title .stock-code {
+  color: #757575;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.period-tag {
+  background: #eef3f8;
+  border-radius: 6px;
+  padding: 4px 10px;
+  color: #546e7a;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 14px 0;
+}
+
+.current-price {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.pct-chg.up,
+.up {
+  color: #e53935;
+}
+
+.pct-chg.down,
+.down {
+  color: #26a69a;
+}
+
+.pct-chg {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.state-badge {
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 14px;
+}
+
+/* ---- 概率条 ---- */
+.prob-bar {
+  display: flex;
+  height: 44px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 12px 0 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.prob-up {
+  background: #e53935;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  min-width: 90px;
+}
+
+.prob-down {
+  background: #26a69a;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+  min-width: 90px;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.metric {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.metric label {
+  display: block;
+  color: #757575;
+  margin-bottom: 4px;
+}
+
+.metric strong {
+  font-size: 16px;
+}
+
+/* ---- 图表 ---- */
+.chart-card h3,
+.explanation-panel h3 {
+  margin-bottom: 10px;
+}
+
+.kline-chart {
+  width: 100%;
+  height: 420px;
+  touch-action: pan-y;
+}
+
+/* ---- 解释 ---- */
+.explanation-panel ul {
+  padding-left: 20px;
+  line-height: 1.9;
+}
+
+.risk-note {
+  margin-top: 14px;
+  padding: 10px;
+  background: #fff3e0;
+  border-radius: 8px;
+  color: #8d6e00;
+  line-height: 1.6;
+}
+
+.risk-footer {
+  margin-top: 24px;
+  padding: 16px 8px 24px;
+  color: #9e9e9e;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* ---- 手机适配 ---- */
+@media (max-width: 600px) {
+  .app {
+    padding: 10px;
+  }
+
+  .app-header h1 {
+    font-size: 18px;
+  }
+
+  .current-price {
+    font-size: 26px;
+  }
+
+  .kline-chart {
+    height: 340px;
+  }
+}
