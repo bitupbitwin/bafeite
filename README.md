@@ -31,7 +31,27 @@
 
 ## 快速开始
 
-第一次安装请看详细的 [安装与使用手册](docs/INSTALL.md)；熟悉命令行的用户按下面三步即可。
+第一次安装请看详细的 [安装与使用手册](docs/INSTALL.md)。
+
+### 一键启动（推荐）
+
+在项目根目录执行，会自动装依赖并同时拉起前后端，按 `Ctrl+C` 一起退出：
+
+```bash
+# macOS / Linux
+./start.sh            # 真实行情
+./start.sh --mock     # 演示数据(无需联网)
+
+# Windows: 双击 start.bat, 或命令行
+start.bat
+start.bat mock
+```
+
+启动后电脑访问 http://localhost:5173 ；手机与电脑同一 Wi-Fi 时，用脚本打印的 `http://<电脑IP>:5173` 访问。
+
+> 📱 **手机当 App 用**：手机浏览器打开后，iOS 在分享菜单点「添加到主屏幕」，安卓 Chrome 在菜单点「安装应用 / 添加到主屏幕」，即可生成图标，点开像原生 App 一样全屏运行（PWA）。完整 App 体验建议用 `npm run build` 的生产版本或 Docker 部署（详见手册）。
+
+### 手动启动
 
 ### 1. 启动后端
 

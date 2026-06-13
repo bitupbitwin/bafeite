@@ -13,4 +13,14 @@ export default defineConfig({
       },
     },
   },
+  // npm run preview 预览生产构建时也代理 /api 到后端
+  preview: {
+    host: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+    },
+  },
 });
