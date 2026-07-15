@@ -4,18 +4,32 @@
   padding: 0;
 }
 
+html {
+  /* 手机横屏时防止浏览器自动放大文字 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   background: #f4f5f7;
   color: #212121;
   font-size: 14px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .app {
   max-width: 860px;
   margin: 0 auto;
   padding: 16px;
+  /* 全面屏手机 PWA 全屏模式下避开刘海与底部指示条 */
+  padding-top: max(16px, env(safe-area-inset-top));
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
   min-height: 100vh;
+  /* dvh 跟随手机浏览器地址栏收起/展开, 不支持的浏览器回退到上面的 vh */
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -93,7 +107,9 @@ main {
   cursor: pointer;
 }
 
-.search-results li:hover {
+.search-results li:hover,
+.search-results li:active {
+  /* :active 让手机(无 hover)点击时也有高亮反馈 */
   background: #f0f6ff;
 }
 
@@ -254,7 +270,9 @@ main {
   display: flex;
   align-items: center;
   padding-left: 12px;
-  min-width: 90px;
+  flex-basis: 0;
+  min-width: 78px;
+  white-space: nowrap;
 }
 
 .prob-down {
@@ -263,7 +281,9 @@ main {
   align-items: center;
   justify-content: flex-end;
   padding-right: 12px;
-  min-width: 90px;
+  flex-basis: 0;
+  min-width: 78px;
+  white-space: nowrap;
 }
 
 .metric-grid {
@@ -328,17 +348,45 @@ main {
 @media (max-width: 600px) {
   .app {
     padding: 10px;
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
   }
 
   .app-header h1 {
     font-size: 18px;
   }
 
+  .card {
+    padding: 14px;
+  }
+
   .current-price {
     font-size: 26px;
   }
 
+  .metric-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .kline-chart {
     height: 340px;
+  }
+
+  .search-results {
+    max-height: 220px;
+  }
+}
+
+/* 竖屏很窄的手机(如 320px 宽)再收紧一档 */
+@media (max-width: 360px) {
+  .period-btn {
+    padding: 0 10px;
+    font-size: 13px;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr;
   }
 }

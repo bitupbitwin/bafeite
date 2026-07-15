@@ -22,16 +22,20 @@ export default function KLineChart({ bars }: { bars: KLineBar[] }) {
     const maLine = (key: 'ma5' | 'ma10' | 'ma20') =>
       bars.map((b) => (b[key] == null ? '-' : Number(b[key]!.toFixed(2))));
 
-    chart.setOption({
-      animation: false,
-      tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
-      legend: { data: ['K线', 'MA5', 'MA10', 'MA20'], top: 0 },
+    // 窄屏(手机)时压缩图表边距与文字, 两个 grid 用相同 left 保证价格区与成交量区对齐
+    const layoutOption = (narrow: boolean) => ({
       grid: [
-        { left: 50, right: 16, top: 30, height: '55%' },
-        { left: 50, right: 16, top: '72%', height: '18%' },
+        { left: narrow ? 42 : 50, right: narrow ? 8 : 16, top: 30, height: '55%' },
+        { left: narrow ? 42 : 50, right: narrow ? 8 : 16, top: '72%', height: '18%' },
       ],
       xAxis: [
-        { type: 'category', data: dates, gridIndex: 0, boundaryGap: true },
+        {
+          type: 'category',
+          data: dates,
+          gridIndex: 0,
+          boundaryGap: true,
+          axisLabel: { fontSize: narrow ? 10 : 12 },
+        },
         {
           type: 'category',
           data: dates,
@@ -41,9 +45,23 @@ export default function KLineChart({ bars }: { bars: KLineBar[] }) {
         },
       ],
       yAxis: [
-        { scale: true, gridIndex: 0, splitLine: { lineStyle: { opacity: 0.3 } } },
+        {
+          scale: true,
+          gridIndex: 0,
+          splitLine: { lineStyle: { opacity: 0.3 } },
+          axisLabel: { fontSize: narrow ? 10 : 12 },
+        },
         { scale: true, gridIndex: 1, axisLabel: { show: false }, splitLine: { show: false } },
       ],
+    });
+    const isNarrow = () => (ref.current?.clientWidth ?? 600) < 480;
+
+    chart.setOption({
+      animation: false,
+      // confine 让 tooltip 始终留在图表内, 手机上不会超出屏幕
+      tooltip: { trigger: 'axis', axisPointer: { type: 'cross' }, confine: true },
+      legend: { data: ['K线', 'MA5', 'MA10', 'MA20'], top: 0 },
+      ...layoutOption(isNarrow()),
       dataZoom: [
         { type: 'inside', xAxisIndex: [0, 1], start: 0, end: 100 },
         { type: 'slider', xAxisIndex: [0, 1], bottom: 0, height: 18 },
@@ -67,10 +85,17 @@ export default function KLineChart({ bars }: { bars: KLineBar[] }) {
       ],
     });
 
-    const onResize = () => chart.resize();
+    const onResize = () => {
+      chart.setOption(layoutOption(isNarrow()));
+      chart.resize();
+    };
     window.addEventListener('resize', onResize);
+    // 手机横竖屏切换或容器尺寸变化时(不一定触发 window resize)也让图表跟随
+    const observer = new ResizeObserver(onResize);
+    observer.observe(ref.current);
     return () => {
       window.removeEventListener('resize', onResize);
+      observer.disconnect();
       chart.dispose();
     };
   }, [bars]);
