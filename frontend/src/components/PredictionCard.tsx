@@ -34,11 +34,12 @@ export default function PredictionCard({ result }: { result: AnalyzeResult }) {
         </span>
       </div>
 
+      {/* 用 flex-grow 按比例分配, 配合 min-width 保证极端概率下文字仍可见且不溢出容器 */}
       <div className="prob-bar">
-        <div className="prob-up" style={{ width: `${result.up_probability}%` }}>
+        <div className="prob-up" style={{ flexGrow: result.up_probability }}>
           涨 {result.up_probability}%
         </div>
-        <div className="prob-down" style={{ width: `${result.down_probability}%` }}>
+        <div className="prob-down" style={{ flexGrow: result.down_probability }}>
           跌 {result.down_probability}%
         </div>
       </div>
